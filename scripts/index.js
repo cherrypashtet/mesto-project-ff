@@ -10,10 +10,6 @@ const cardTemplate = document.querySelector('#card-template').content; // раз
 
 // @todo: Функция создания карточки
 
-// const deleteCard = delButton.addEventListener('click', () => {
-//     cardElement.remove();
-// });
-
 function createCard(cardTitleDescription, cardImageLink, {deleteCard} ) {
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
     const delButton = cardElement.querySelector('.card__delete-button');
@@ -31,7 +27,7 @@ function createCard(cardTitleDescription, cardImageLink, {deleteCard} ) {
 // @todo: Функция удаления карточки
 
 function deleteCard(evt) {
-    let currentCard = evt.target.closest('.card');
+    const currentCard = evt.target.closest('.card');
     currentCard.remove();
 };
 
