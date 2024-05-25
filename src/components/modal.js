@@ -1,30 +1,43 @@
-function openClosePopup(popupType) {
+// Открытие попапа
+
+function openPopup(popupType) {
     const popup = document.querySelector(popupType);
-    const closeButton = popup.querySelector('.popup__close');
     popup.classList.add('popup_is-opened');
 
-    popup.addEventListener('click', closePopup);
+    popup.addEventListener('click', closePopupOnButton);
     document.addEventListener('keydown', closePopupEsc);
     popup.addEventListener('click', closePopupOnOverlay);
+};
 
-    function closePopup(evt) {
-        if (evt.target === closeButton) {
-            popup.classList.remove('popup_is-opened');
-        };
-    }
+// Закрытие попапа
 
-    function closePopupEsc(evt) {
-        if (evt.key === 'Escape') {
-            popup.classList.remove('popup_is-opened');
-            document.removeEventListener('keydown', closePopupEsc);
-        };
-    }
+function closePopup(popupType) {
+    popupType.classList.remove('popup_is-opened');
+    document.removeEventListener('keydown', closePopupEsc);
+};
 
-    function closePopupOnOverlay(evt) {
-        if (evt.target === evt.currentTarget) {
-            popup.classList.remove('popup_is-opened');
-        };
+// Закрыть попап через кнопку, escape, overlay 
+
+function closePopupEsc(evt) {
+    const openedPopup = document.querySelector('.popup_is-opened');
+    if (evt.key === 'Escape') {
+        closePopup(openedPopup);
+    };
+}
+
+function closePopupOnOverlay(evt) {
+    const openedPopup = document.querySelector('.popup_is-opened');
+    if (evt.target === evt.currentTarget) {
+        closePopup(openedPopup);
     };
 };
 
-export {openClosePopup};
+function closePopupOnButton (evt) {
+    const openedPopup = document.querySelector('.popup_is-opened');
+    const closeButton = openedPopup.querySelector('.popup__close');
+    if (evt.target === closeButton) {
+        closePopup(openedPopup);
+    }
+}
+
+export { openPopup, closePopup, closePopupEsc, closePopupOnButton }
