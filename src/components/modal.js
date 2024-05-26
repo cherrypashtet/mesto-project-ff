@@ -1,19 +1,20 @@
 // Открытие попапа
 
 function openPopup(popupType) {
-    const popup = document.querySelector(popupType);
-    popup.classList.add('popup_is-opened');
+    popupType.classList.add('popup_is-opened');
 
-    popup.addEventListener('click', closePopupOnButton);
+    popupType.addEventListener('click', closePopupOnButton);
     document.addEventListener('keydown', closePopupEsc);
-    popup.addEventListener('click', closePopupOnOverlay);
+    popupType.addEventListener('click', closePopupOnOverlay);
 };
 
 // Закрытие попапа
 
 function closePopup(popupType) {
     popupType.classList.remove('popup_is-opened');
+    popupType.removeEventListener('click', closePopupOnButton);
     document.removeEventListener('keydown', closePopupEsc);
+    popupType.removeEventListener('click', closePopupOnOverlay);
 };
 
 // Закрыть попап через кнопку, escape, overlay 

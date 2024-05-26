@@ -1,6 +1,6 @@
 import './pages/index.css';
 import { initialCards, deleteCard, createCard, likeCard } from './components/cards.js';
-import { openPopup, closePopup, closePopupEsc, closePopupOnButton } from './components/modal.js';
+import { openPopup, closePopup } from './components/modal.js';
 // DOM узлы
 
 const mainContent = document.querySelector('.content'); // контент страницы
@@ -36,53 +36,53 @@ initialCards.forEach((element) => {
     placeList.append(cardElement);
 });
 
-const Avatar = new URL('./images/avatar.jpg', import.meta.url);
-const AddIcon = new URL('./images/add-icon.svg', import.meta.url);
-const Card1 = new URL('./images/card_1.jpg', import.meta.url);
-const Card2 = new URL('./images/card_2.jpg', import.meta.url);
-const Card3 = new URL('./images/card_3.jpg', import.meta.url);
-const Close = new URL('./images/close.svg', import.meta.url);
-const DeleteIcon = new URL('./images/delete-icon.svg', import.meta.url);
-const EditIcon = new URL('./images/edit-icon.svg', import.meta.url);
-const LikeActive = new URL('./images/like-active.svg', import.meta.url);
-const LikeInactive = new URL('./images/like-inactive.svg', import.meta.url);
-const Logo = new URL('./images/logo.svg', import.meta.url);
-const InterBlack = new URL('./vendor/fonts/Inter-Black.woff2', import.meta.url);
-const InterMedium = new URL('./vendor/fonts/Inter-Medium.woff2', import.meta.url);
-const InterRegular = new URL('./vendor/fonts/Inter-Regular.woff2', import.meta.url);
+const avatar = new URL('./images/avatar.jpg', import.meta.url);
+const addIcon = new URL('./images/add-icon.svg', import.meta.url);
+const card1 = new URL('./images/card_1.jpg', import.meta.url);
+const card2 = new URL('./images/card_2.jpg', import.meta.url);
+const card3 = new URL('./images/card_3.jpg', import.meta.url);
+const close = new URL('./images/close.svg', import.meta.url);
+const deleteIcon = new URL('./images/delete-icon.svg', import.meta.url);
+const editIcon = new URL('./images/edit-icon.svg', import.meta.url);
+const likeActive = new URL('./images/like-active.svg', import.meta.url);
+const likeInactive = new URL('./images/like-inactive.svg', import.meta.url);
+const logo = new URL('./images/logo.svg', import.meta.url);
+const interBlack = new URL('./vendor/fonts/Inter-Black.woff2', import.meta.url);
+const interMedium = new URL('./vendor/fonts/Inter-Medium.woff2', import.meta.url);
+const interRegular = new URL('./vendor/fonts/Inter-Regular.woff2', import.meta.url);
 
-const MestoImages = [
-  { name: 'Avatar', link: Avatar },
-  { name: 'AddIcon', link: AddIcon },
-  { name: 'Card1', link: Card1 },
-  { name: 'Card2', link: Card2 },
-  { name: 'Card3', link: Card3 },
-  { name: 'Close', link: Close },
-  { name: 'DeleteIcon', link: DeleteIcon },
-  { name: 'EditIcon', link: EditIcon },
-  { name: 'LikeActive', link: LikeActive },
-  { name: 'LikeInactive', link: LikeInactive },
-  { name: 'Logo', link: Logo },
-  { name: 'InterBlack', link: InterBlack },
-  { name: 'InterMedium', link: InterMedium },
-  { name: 'InterRegular', link: InterRegular }  
+const mestoImages = [
+  { name: 'avatar', link: avatar },
+  { name: 'addIcon', link: addIcon },
+  { name: 'card1', link: card1 },
+  { name: 'card2', link: card2 },
+  { name: 'card3', link: card3 },
+  { name: 'close', link: close },
+  { name: 'deleteIcon', link: deleteIcon },
+  { name: 'editIcon', link: editIcon },
+  { name: 'likeActive', link: likeActive },
+  { name: 'likeInactive', link: likeInactive },
+  { name: 'logo', link: logo },
+  { name: 'interBlack', link: interBlack },
+  { name: 'interMedium', link: interMedium },
+  { name: 'interRegular', link: interRegular }  
 ];
 
 // Попапы
 
 editButton.addEventListener('click', () => {
-    openPopup('.popup_type_edit');
+    openPopup(popupTypeEdit);
     nameInput.value = profileTitle.textContent;
     jobInput.value = profileDescription.textContent;
 });
 
 addButton.addEventListener('click', ()=> {
-    openPopup('.popup_type_new-card');
+    openPopup(popupTypeNewCard);
 });
 
 // form
 
-function handleFormSubmit(evt) {
+function handleProfileFormSubmit(evt) {
     evt.preventDefault();
 
     profileTitle.textContent = nameInput.value;
@@ -91,14 +91,14 @@ function handleFormSubmit(evt) {
     closePopup(popupTypeEdit);
 };
 
-formElement.addEventListener('submit', handleFormSubmit);
+formElement.addEventListener('submit', handleProfileFormSubmit);
 
 function addCard (evt) {
     evt.preventDefault();
     const newCard = createCard(cardNameInput.value, cardUrlInput.value, deleteCard, likeCard, handleImageClick);
 
     placeList.prepend(newCard);
-    popupTypeNewCard.classList.remove('popup_is-opened');
+    closePopup(popupTypeNewCard);
 
     evt.target.reset();
 }
@@ -116,5 +116,5 @@ function handleImageClick (evt) {
     popupImage.src = cardImage.src;
     popupCaption.textContent = cardTitle.textContent;
   
-    openPopup('.popup_type_image');
+    openPopup(popupTypeImage);
 };
