@@ -1,6 +1,9 @@
 import './pages/index.css';
 import { initialCards, deleteCard, createCard, likeCard } from './components/cards.js';
 import { openPopup, closePopup } from './components/modal.js';
+import { enableValidation, clearValidation } from './components/validation.js';
+
+
 // DOM узлы
 
 const mainContent = document.querySelector('.content'); // контент страницы
@@ -118,3 +121,16 @@ function handleImageClick (evt) {
   
     openPopup(popupTypeImage);
 };
+  
+
+const validationConfig = {
+    formSelector: ".popup__form",
+    inputSelector: ".popup__input",
+    submitButtonSelector: ".popup__button",
+    inactiveButtonClass: "popup__button_disabled",
+    inputErrorClass: "popup__input_type_error",
+    errorClass: "popup__error_visible",
+};
+
+enableValidation(validationConfig);
+clearValidation(cardForm, validationConfig);

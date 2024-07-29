@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
-    "dev": "webpack serve"
+    "dev": "webpack serve",
+    "debugthis": "node --inspect --inspect-brk ./src/index.js",
+    "debug": "node --inspect --debug-brk ./node_modules/webpack/bin/webpack.js"
   },
   "author": "Ilya",
   "license": "ISC",
@@ -25,6 +27,7 @@
     "webpack-dev-server": "^5.0.4"
   },
   "dependencies": {
-    "core-js": "^3.37.1"
+    "core-js": "^3.37.1",
+    "util": "^0.12.5"
   }
 }
