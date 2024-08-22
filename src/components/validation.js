@@ -77,12 +77,12 @@ const toggleButtonState = (isValid, button, validationConfig) => {
     }
 }
   
-  /* Сбросить валидацию */
-  
+// сброс валидации
+
 const clearValidation = (form, validationConfig) => {
     const inputs = form.querySelectorAll(validationConfig.inputSelector);
   
-    inputs.forEach((input) => hideError(input, validationConfig));
+    inputs.forEach((input) => hideInputError(input, validationConfig));
 }
 
   
