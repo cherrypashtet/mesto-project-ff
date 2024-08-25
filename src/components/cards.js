@@ -49,30 +49,17 @@ function createCard(cardTitleDescription, cardImageLink, cardList, userData, del
   cardImage.addEventListener('click', handleImageClick);
   delButton.addEventListener('click', () => deleteCard(cardElement, cardList));
   cardLikeButton.addEventListener('click', () => toggleLike(cardElement, cardList));
-  // delButton.addEventListener('click', deleteCard);
-  // cardLikeButton.addEventListener('click', likeCard);
 
   return cardElement;
 }
 
 // Функция удаления карточки
 
-// function deleteCard(evt) {
-//   const currentCard = evt.target.closest('.card');
-//   currentCard.remove();
-// };
-
 function deleteCard(currentCard) {
   currentCard.remove();
 };
 
 // like карточки 
-
-// function likeCard (evt) {
-//   if (evt.target.classList.contains('card__like-button')) {
-//     evt.target.classList.toggle('card__like-button_is-active');
-//   };
-// };
 
 function likeCard(currentCard) {
   const cardLikeButton = currentCard.querySelector('.card__like-button');

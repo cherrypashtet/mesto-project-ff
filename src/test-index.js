@@ -11,7 +11,6 @@ export const getAllTodos = () => {
     .then(handleResponse)
 };
 
-
 // в createTodo передаем дату и отправляем ее в body
 
 export const createTodo = (data) => {
@@ -24,17 +23,6 @@ export const createTodo = (data) => {
     })
     .then(handleResponse)        
 }
-
-// getAllTodos().then((data) => {
-//     console.log(data);
-// });
-// createTodo({
-//     title: "Полить kaktus",
-//     completed: false
-// })
-// .then((data) => {
-//     console.log(data);
-// });
 
 let userId = null;
 

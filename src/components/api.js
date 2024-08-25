@@ -37,10 +37,6 @@ export const editProfile = (userName, userAbout) => {
     return fetch(`${config.baseUrl}/users/me`, {
         method: 'PATCH',
         headers: config.headers,
-        // body: JSON.stringify({
-        //     name: 'Marie Skłodowska Curie',
-        //     about: 'Physicist and Chemist'
-        //   })
         body: JSON.stringify({
             name: userName,
             about: userAbout

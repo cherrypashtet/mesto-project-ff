@@ -25,7 +25,7 @@ const hideInputError = (inputElement, validationConfig) => {
 const checkInputValidity = (inputElement, validationConfig) => {
 
     if (inputElement.validity.valueMissing) {
-        showError(inputElement, 'Это обязательное поле', validationConfig);
+        showInputError(inputElement, 'Это обязательное поле', validationConfig);
 
         return false;
     }  
@@ -43,7 +43,7 @@ const checkInputValidity = (inputElement, validationConfig) => {
     }
 
 };
-    
+
 // обработчики событий для инпутов
 
 const setEventListeners = (formElement, validationConfig) => {
@@ -56,12 +56,12 @@ const setEventListeners = (formElement, validationConfig) => {
         
         checkInputValidity(inputElement, validationConfig);
         toggleButtonState(isFormValid, buttonElement, validationConfig);
-    })    
+    })
     formElement.addEventListener('reset', () => {
         clearValidation(formElement, validationConfig);
-    });    
+    });
 };
-  
+
 const enableValidation = (validationConfig) => {
     const formsElement = document.querySelectorAll(validationConfig.formSelector);
     formsElement.forEach((formElement) => setEventListeners(formElement, validationConfig))
@@ -86,4 +86,4 @@ const clearValidation = (form, validationConfig) => {
 }
 
   
-export { enableValidation, clearValidation }
+export { enableValidation, clearValidation, toggleButtonState }

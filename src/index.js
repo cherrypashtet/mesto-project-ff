@@ -1,7 +1,7 @@
 import './pages/index.css';
-import { initialCards, deleteCard, createCard, likeCard } from './components/cards.js';
+import { deleteCard, createCard, likeCard } from './components/cards.js';
 import { openPopup, closePopup } from './components/modal.js';
-import { enableValidation, clearValidation } from './components/validation.js';
+import { enableValidation, clearValidation, toggleButtonState } from './components/validation.js';
 import { getUserInfo, getCards, editProfile, addNewCard, deleteUserCard, likeUserCard, dislikeUserCard, switchAvatar } from './components/api.js';
 
 // DOM узлы
@@ -16,7 +16,6 @@ const popupTypeEdit = document.querySelector('.popup_type_edit');
 // card
 const cardNameInput = popupTypeNewCard.querySelector('.popup__input_type_card-name');
 const cardUrlInput = popupTypeNewCard.querySelector('.popup__input_type_url');
-// const cardLikeQuantity = document.querySelectorAll('.card__like-quantity');
 
 // popup image
 
@@ -65,7 +64,10 @@ Promise.all([
         profileDescription.textContent = userData.about;
         profileAvatar.style.backgroundImage = `url(${userData.avatar})`;
         
-        console.log({cardList, userData})
+        // console.log({cardList, userData})
+    })
+    .catch((error) => {
+        console.log(`Error: ${error}`)
     })
 
 const avatar = new URL('./images/avatar.jpg', import.meta.url);
@@ -103,12 +105,20 @@ const mestoImages = [
 // Попапы
 
 editButton.addEventListener('click', () => {
-    openPopup(popupTypeEdit);
     nameInput.value = profileTitle.textContent;
     jobInput.value = profileDescription.textContent;
+    const formButton = popupTypeEdit.querySelector('.button');
+    toggleButtonState(true, formButton, validationConfig);
+    clearValidation(popupTypeEdit, validationConfig);
+    openPopup(popupTypeEdit);
 });
 
 addButton.addEventListener('click', ()=> {
+    const button = popupTypeNewCard.querySelector('.button');
+    button.disabled = true;
+    button.classList.add(validationConfig.inactiveButtonClass);
+    cardNameInput.value = '';
+    cardUrlInput.value = '';
     openPopup(popupTypeNewCard);
 });
 
@@ -151,7 +161,10 @@ function changeAvatar(evt) {
             formButton.textContent = 'Сохранить';
             avatarInput.value = '';
             closePopup(popupTypeAvatar);
-        });
+        })
+        .catch((error) => {
+            console.log(`Error: ${error}`)
+        })
     clearValidation(popupTypeAvatar, validationConfig);
 }
 
@@ -171,8 +184,12 @@ function addCard (evt) {
             formButton.textContent = 'Сохранить';
             cardNameInput.value = '';
             cardUrlInput.value = '';
+            toggleButtonState(false, formButton, validationConfig);
             closePopup(popupTypeNewCard);
-        });
+        })
+        .catch((error) => {
+            console.log(`Error: ${error}`)
+        })
     
     clearValidation(popupTypeNewCard, validationConfig)
 }
@@ -210,16 +227,10 @@ const removeCard = (card, data) => {
     deleteUserCard(data._id).then(() => {
         deleteCard(card)
     })
+    .catch((error) => {
+        console.log(`Error: ${error}`)
+    })
 }
-
-// const addNewLike = (card, data) => {
-//     likeUserCard(data._id).then((newdata) => {
-//         likeCard(card);
-//         const cardLikeQuantity = card.querySelector('.card__like-quantity');
-//         cardLikeQuantity.textContent = newdata.likes.length;
-//         console.log(newdata)
-//     })
-// }
 
 const toggleLike = (card, cardData) => {
     const cardLikeButton = card.querySelector('.card__like-button');
@@ -229,6 +240,9 @@ const toggleLike = (card, cardData) => {
             const cardLikeQuantity = card.querySelector('.card__like-quantity');
             cardLikeQuantity.textContent = newdata.likes.length;
         })
+        .catch((error) => {
+            console.log(`Error: ${error}`)
+        })
     }
     else {
         dislikeUserCard(cardData._id).then((newdata) => {
@@ -236,22 +250,8 @@ const toggleLike = (card, cardData) => {
             const cardLikeQuantity = card.querySelector('.card__like-quantity');
             cardLikeQuantity.textContent = newdata.likes.length;
         })
+        .catch((error) => {
+            console.log(`Error: ${error}`)
+        })
     }
 }
-
-/////////////////////////////////////////////////////////////////
-
-// getUserInfo().then((data) => {
-//     profileTitle.textContent = data.name;
-//     profileDescription.textContent = data.about;
-//     profileAvatar.url = data.avatar;
-//     console.log(data)
-// })
-
-
-
-// 1. Что-то написали в input.value
-// 2. Отправить запрос с датой, которую получили в input.value
-// 3. Отобразить на странице
-
-// editProfile(nameInput.value, jobInput.value).then()
