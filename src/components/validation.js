@@ -7,7 +7,7 @@ const showInputError = (inputElement, errorMessage, validationConfig) => {
     
     inputElement.classList.add(validationConfig.inputErrorClass);   // добавляем класс инпуту формы
     errorElement.textContent = errorMessage;                    // передаем текст ошибки
-    errorElement.classList.add('form__input-error_active');     // добавляем класс span'у
+    errorElement.classList.add(validationConfig.inputErrorActiveClass);     // добавляем класс span'у
 };
   
 const hideInputError = (inputElement, validationConfig) => {
@@ -16,7 +16,7 @@ const hideInputError = (inputElement, validationConfig) => {
         .querySelector(`.${inputElement.id}-error`);
     
     inputElement.classList.remove(validationConfig.inputErrorClass);
-    errorElement.classList.remove('form__input-error_active');
+    errorElement.classList.remove(validationConfig.inputErrorActiveClass);
     errorElement.textContent = '';
 };
     
@@ -81,9 +81,8 @@ const toggleButtonState = (isValid, button, validationConfig) => {
 
 const clearValidation = (form, validationConfig) => {
     const inputs = form.querySelectorAll(validationConfig.inputSelector);
-  
+
     inputs.forEach((input) => hideInputError(input, validationConfig));
 }
 
-  
 export { enableValidation, clearValidation, toggleButtonState }

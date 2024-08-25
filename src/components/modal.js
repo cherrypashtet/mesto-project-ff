@@ -20,22 +20,20 @@ function closePopup(popupType) {
 // Закрыть попап через кнопку, escape, overlay 
 
 function closePopupEsc(evt) {
-    const openedPopup = document.querySelector('.popup_is-opened');
     if (evt.key === 'Escape') {
+        const openedPopup = document.querySelector('.popup_is-opened');
         closePopup(openedPopup);
     };
 }
 
 function closePopupOnOverlay(evt) {
-    const openedPopup = document.querySelector('.popup_is-opened');
     if (evt.target === evt.currentTarget) {
-        closePopup(openedPopup);
+        closePopup(evt.currentTarget);
     };
 };
 
 function closePopupOnButton (evt) {
-    const openedPopup = document.querySelector('.popup_is-opened');
-    const closeButton = openedPopup.querySelector('.popup__close');
+    const closeButton = evt.currentTarget.querySelector('.popup__close');
     if (evt.target === closeButton) {
         closePopup(openedPopup);
     }

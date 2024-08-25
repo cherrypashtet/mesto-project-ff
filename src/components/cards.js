@@ -1,29 +1,4 @@
-const initialCards = [
-    {
-      name: "Архыз",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-    },
-    {
-      name: "Челябинская область",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-    },
-    {
-      name: "Иваново",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-    },
-    {
-      name: "Камчатка",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-    },
-    {
-      name: "Холмогорский район",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-    },
-    {
-      name: "Байкал",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-    }
-];
+import { deleteUserCard, likeUserCard, dislikeUserCard } from './api.js';
 
 // Функция создания карточки
 
@@ -44,6 +19,10 @@ function createCard(cardTitleDescription, cardImageLink, cardList, userData, del
   cardLikeQuantity.textContent = cardList.likes.length;
   if (isLiked) {
     cardLikeButton.classList.add('card__like-button_is-active');
+  }
+  
+  if (userData._id != cardList.owner._id) {
+    delButton.style.display = 'none';
   }
 
   cardImage.addEventListener('click', handleImageClick);
@@ -66,4 +45,31 @@ function likeCard(currentCard) {
   cardLikeButton.classList.toggle('card__like-button_is-active');
 }
 
-export { initialCards, deleteCard, createCard, likeCard };
+const removeCard = (card, data) => {
+  deleteUserCard(data._id).then(() => {
+      deleteCard(card)
+  })
+  .catch(console.error)
+}
+
+const toggleLike = (card, cardData) => {
+  const cardLikeButton = card.querySelector('.card__like-button');
+  if (!cardLikeButton.classList.contains('card__like-button_is-active')) {
+      likeUserCard(cardData._id).then((newdata) => {
+          likeCard(card);
+          const cardLikeQuantity = card.querySelector('.card__like-quantity');
+          cardLikeQuantity.textContent = newdata.likes.length;
+      })
+      .catch(console.error)
+  }
+  else {
+      dislikeUserCard(cardData._id).then((newdata) => {
+          likeCard(card);
+          const cardLikeQuantity = card.querySelector('.card__like-quantity');
+          cardLikeQuantity.textContent = newdata.likes.length;
+      })
+      .catch(console.error)
+  }
+}
+
+export { deleteCard, createCard, likeCard, removeCard, toggleLike };
