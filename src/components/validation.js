@@ -35,7 +35,7 @@ const checkInputValidity = (inputElement, validationConfig) => {
     } else {
         inputElement.setCustomValidity('');
     }
-  
+
     if (!inputElement.validity.valid) {
         showInputError(inputElement, inputElement.validationMessage, validationConfig);
     } else {
@@ -49,34 +49,42 @@ const checkInputValidity = (inputElement, validationConfig) => {
 const setEventListeners = (formElement, validationConfig) => {
     const buttonElement = formElement
     .querySelector(validationConfig.submitButtonSelector);
-    
-    formElement.addEventListener('input', (evt) => {
-        const inputElement = evt.target;
-        const isFormValid = inputElement.validity.valid;
-        
-        checkInputValidity(inputElement, validationConfig);
-        toggleButtonState(isFormValid, buttonElement, validationConfig);
+    const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+
+    inputList.forEach((inputElement) => {
+        inputElement.addEventListener('input', ()=> {
+            const isFormValid = hasInvalidInput(inputList);
+            checkInputValidity(inputElement, validationConfig);
+            toggleButtonState(isFormValid, buttonElement, validationConfig);
+        })
     })
     formElement.addEventListener('reset', () => {
         clearValidation(formElement, validationConfig);
+        toggleButtonState(true, buttonElement, validationConfig);
     });
 };
+
+const hasInvalidInput = (inputList) => {
+    return inputList.some((inputElement) => {
+      return (!inputElement.validity.valid)
+    })
+}
 
 const enableValidation = (validationConfig) => {
     const formsElement = document.querySelectorAll(validationConfig.formSelector);
     formsElement.forEach((formElement) => setEventListeners(formElement, validationConfig))
 };
 
-const toggleButtonState = (isValid, button, validationConfig) => {
-    if (isValid) {
-        button.removeAttribute('disabled');
-        button.classList.remove(validationConfig.inactiveButtonClass);
-    } else {
+const toggleButtonState = (isInvalid, button, validationConfig) => {
+    if (isInvalid) {
         button.disabled = true;
         button.classList.add(validationConfig.inactiveButtonClass);
+    } else {
+        button.removeAttribute('disabled');
+        button.classList.remove(validationConfig.inactiveButtonClass);
     }
 }
-  
+
 // сброс валидации
 
 const clearValidation = (form, validationConfig) => {

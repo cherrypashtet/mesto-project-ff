@@ -77,7 +77,7 @@ Promise.all([
 editButton.addEventListener('click', () => {
     nameInput.value = profileTitle.textContent;
     jobInput.value = profileDescription.textContent;
-    toggleButtonState(true, profileFormButton, validationConfig);
+    toggleButtonState(false, profileFormButton, validationConfig);
     clearValidation(popupTypeEdit, validationConfig);
     openPopup(popupTypeEdit);
 });
@@ -85,7 +85,7 @@ editButton.addEventListener('click', () => {
 addButton.addEventListener('click', ()=> {
     cardNameInput.value = '';
     cardUrlInput.value = '';
-    toggleButtonState(false, cardFormButton, validationConfig);
+    toggleButtonState(true, cardFormButton, validationConfig);
     clearValidation(popupTypeNewCard, validationConfig);
     openPopup(popupTypeNewCard);
 });
@@ -93,7 +93,7 @@ addButton.addEventListener('click', ()=> {
 profileAvatar.addEventListener('click', () => {
     avatarInput.value = '';
     clearValidation(popupTypeAvatar, validationConfig);
-    toggleButtonState(false, avatarFormButton, validationConfig);
+    toggleButtonState(true, avatarFormButton, validationConfig);
     openPopup(popupTypeAvatar);
 })
 
