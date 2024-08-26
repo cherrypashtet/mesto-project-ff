@@ -123,7 +123,6 @@ function changeAvatar(evt) {
     switchAvatar(avatarUrl)
         .then(() => {
             profileAvatar.style.backgroundImage = `url(${avatarUrl})`;
-            evt.submitter.textContent = 'Сохранить';
             avatarInput.value = '';
             closePopup(popupTypeAvatar);
         })
@@ -138,16 +137,15 @@ profileForm.addEventListener('submit', handleProfileFormSubmit);
 function addCard (evt) {
     evt.preventDefault();
     
-    const formButton = popupTypeNewCard.querySelector('.button');
-    formButton.textContent = 'Сохранение...';
+    evt.submitter.textContent = 'Сохранение...';
     addNewCard(cardNameInput.value, cardUrlInput.value)
         .then((currentCard) => {
             const newCard = createCard(cardNameInput.value, cardUrlInput.value, currentCard, currentCard.owner, removeCard, toggleLike, handleImageClick);
             placeList.prepend(newCard);
-            formButton.textContent = 'Сохранить';
             closePopup(popupTypeNewCard);
         })
         .catch(console.error)
+        .finally(() => evt.submitter.textContent = 'Сохранить')
 }
 
 cardForm.addEventListener('submit', addCard);

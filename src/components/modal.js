@@ -33,9 +33,10 @@ function closePopupOnOverlay(evt) {
 };
 
 function closePopupOnButton (evt) {
+
     const closeButton = evt.currentTarget.querySelector('.popup__close');
     if (evt.target === closeButton) {
-        closePopup(openedPopup);
+        closePopup(evt.currentTarget);
     }
 }
 
