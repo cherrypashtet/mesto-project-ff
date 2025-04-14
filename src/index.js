@@ -14,6 +14,7 @@ const popupTypeNewCard = document.querySelector('.popup_type_new-card');
 const popupTypeEdit = document.querySelector('.popup_type_edit');
 
 // card
+
 const cardNameInput = popupTypeNewCard.querySelector('.popup__input_type_card-name');
 const cardUrlInput = popupTypeNewCard.querySelector('.popup__input_type_url');
 
@@ -23,7 +24,8 @@ const popupTypeImage = document.querySelector('.popup_type_image');
 const popupCaption = popupTypeImage.querySelector('.popup__caption');
 const popupImage = popupTypeImage.querySelector('.popup__image');
 
-// popup Профиль 
+// popup profile 
+
 const profileForm = document.forms['edit-profile'];
 const nameInput = profileForm.querySelector('.popup__input_type_name');
 const jobInput = profileForm.querySelector('.popup__input_type_description');
@@ -53,7 +55,6 @@ const validationConfig = {
 };
 
 // Вывести карточки на страницу
-// todo: не пердавать кучу элементов в createCard
 
 Promise.all([
     getCards(), 
@@ -150,7 +151,7 @@ function addCard (evt) {
 
 cardForm.addEventListener('submit', addCard);
 
-// Открытие popup изображения
+// Открытие popup изображения карточки
 
 function handleImageClick (evt) {
     const card = evt.target.closest('.card');

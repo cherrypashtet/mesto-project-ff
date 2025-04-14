@@ -9,7 +9,8 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "debugthis": "node --inspect --inspect-brk ./src/index.js",
-    "debug": "node --inspect --debug-brk ./node_modules/webpack/bin/webpack.js"
+    "debug": "node --inspect --debug-brk ./node_modules/webpack/bin/webpack.js",
+    "start": "ts-node ./src/script.ts"
   },
   "author": "Ilya",
   "license": "ISC",
@@ -25,6 +26,9 @@
     "html-webpack-plugin": "^5.6.0",
     "mini-css-extract-plugin": "^2.9.1",
     "postcss-loader": "^8.1.1",
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4",
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.4"
